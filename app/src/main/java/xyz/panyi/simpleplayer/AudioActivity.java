@@ -17,7 +17,7 @@ import java.nio.ByteBuffer;
 /**
  *
  */
-public class MainActivity extends AppCompatActivity {
+public class AudioActivity extends AppCompatActivity {
 
     private SurfaceView mSurfaceView;
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     final class DecoderThread extends Thread{
         @Override
         public void run() {
-            AssetFileDescriptor afd =getResources().openRawResourceFd(R.raw.datie );
+            AssetFileDescriptor afd =getResources().openRawResourceFd(R.raw.clipcanvas_14348_h264_640x360);
 
             MediaExtractor mediaExtractor = new MediaExtractor();
             try {
