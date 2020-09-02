@@ -15,9 +15,13 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
+ *   https://bigflake.com/mediacodec/#overview
+ *
+ *
+ *
  *
  */
-public class AudioActivity extends AppCompatActivity {
+public class VideoActivity extends AppCompatActivity {
 
     private SurfaceView mSurfaceView;
 
@@ -63,7 +67,7 @@ public class AudioActivity extends AppCompatActivity {
                 mediaDecoder.configure(format , mSurfaceView.getHolder().getSurface() ,null , 0 );
                 mediaDecoder.start();
 
-                int timeoutUs = 1000000; // 1 second timeout
+                int timeoutUs = 1_000_000; // 1 second timeout
                 boolean eos = false;
                 long playStartTime = System.currentTimeMillis();
                 long frameDisplayTime = playStartTime;

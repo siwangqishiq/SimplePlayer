@@ -23,7 +23,7 @@ import java.util.concurrent.CyclicBarrier;
 /**
  *
  */
-public class MainActivity2 extends AppCompatActivity {
+public class AudioPlayerActivity extends AppCompatActivity {
     ParserTask task;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
