@@ -7,6 +7,7 @@ import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.view.Surface;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -14,6 +15,8 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyGLSurfaceView extends GLSurfaceView implements GLSurfaceView.Renderer , SurfaceTexture.OnFrameAvailableListener{
     private int textureID;
     private int renderVideoProgramId;
+    private SurfaceTexture surfaceTexture;
+    private Surface surface;
 
     public MyGLSurfaceView(Context context) {
         super(context);
@@ -38,7 +41,15 @@ public class MyGLSurfaceView extends GLSurfaceView implements GLSurfaceView.Rend
 
         textureID = createOesTexture();
         renderVideoProgramId = ShaderUtil.buildShaderProgram(R.raw.render_video_vs , R.raw.render_video_frag);
+        if(renderVideoProgramId > 0){
+            System.out.println("编译成功 programId = " + renderVideoProgramId);
+        }
 
+        surfaceTexture = new SurfaceTexture(textureID);
+        surfaceTexture.setOnFrameAvailableListener(this);
+
+        surface = new Surface(surfaceTexture);
+        //surface.release();
     }
 
     /**
