@@ -13,6 +13,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class MyGLSurfaceView extends GLSurfaceView implements GLSurfaceView.Renderer , SurfaceTexture.OnFrameAvailableListener{
     private int textureID;
+    private int renderVideoProgramId;
 
     public MyGLSurfaceView(Context context) {
         super(context);
@@ -33,7 +34,10 @@ public class MyGLSurfaceView extends GLSurfaceView implements GLSurfaceView.Rend
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        ShaderUtil.ctx = getContext();
+
         textureID = createOesTexture();
+        renderVideoProgramId = ShaderUtil.buildShaderProgram(R.raw.render_video_vs , R.raw.render_video_frag);
 
     }
 

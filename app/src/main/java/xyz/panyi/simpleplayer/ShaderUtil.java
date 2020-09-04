@@ -41,7 +41,7 @@ import static android.opengl.GLUtils.texImage2D;
 public class ShaderUtil {
     public static final String TAG = "Yoki3D ShaderUtils";
 
-    public static Application ctx;
+    public static Context ctx;
     public static final int NO_TEXTURE_ID = -1;
 
 

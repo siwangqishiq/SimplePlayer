@@ -9,5 +9,5 @@ out vec2 vTextureCoord;
 
 void main()  {
     gl_Position = uMVPMatrix * aPosition;
-    vPosition=vTextureCoord = (uSTMatrix * aTextureCoord).xy;
+    vTextureCoord = (uSTMatrix * aTextureCoord).xy;
 }
