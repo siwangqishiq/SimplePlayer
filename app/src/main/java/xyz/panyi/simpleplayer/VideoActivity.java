@@ -38,11 +38,17 @@ public class VideoActivity extends AppCompatActivity {
     final class DecoderThread extends Thread{
         @Override
         public void run() {
-            AssetFileDescriptor afd =getResources().openRawResourceFd(R.raw.clipcanvas_14348_h264_640x360);
+            //AssetFileDescriptor afd =getResources().openRawResourceFd(R.raw.clipcanvas_14348_h264_640x360);
+
+
 
             MediaExtractor mediaExtractor = new MediaExtractor();
             try {
-                mediaExtractor.setDataSource(afd.getFileDescriptor() , afd.getStartOffset(), afd.getDeclaredLength());
+
+                final AssetFileDescriptor fileDescriptor=getAssets().openFd("datie.mp4");
+                mediaExtractor.setDataSource(fileDescriptor.getFileDescriptor() , fileDescriptor.getStartOffset() , fileDescriptor.getLength());
+
+                //mediaExtractor.setDataSource(afd.getFileDescriptor() , afd.getStartOffset(), afd.getDeclaredLength());
 
                 int numTracks = mediaExtractor.getTrackCount();
                 MediaFormat format = null;
@@ -94,13 +100,13 @@ public class VideoActivity extends AppCompatActivity {
                     int outputBufferIndex = mediaDecoder.dequeueOutputBuffer(bufferInfo, timeoutUs);
                     if (outputBufferIndex >= 0){
                         // Frame rate control
-                        while(frameDisplayTime > System.currentTimeMillis()) {
-                            try {
-                                sleep(10);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }//end while
+//                        while(frameDisplayTime > System.currentTimeMillis()) {
+//                            try {
+//                                sleep(10);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }//end while
 
                         // outputBuffer is ready to be processed or rendered.
                         mediaDecoder.releaseOutputBuffer(outputBufferIndex, true /*true:render to surface*/);
