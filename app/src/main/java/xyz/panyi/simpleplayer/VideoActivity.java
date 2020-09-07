@@ -39,9 +39,6 @@ public class VideoActivity extends AppCompatActivity {
         @Override
         public void run() {
             //AssetFileDescriptor afd =getResources().openRawResourceFd(R.raw.clipcanvas_14348_h264_640x360);
-
-
-
             MediaExtractor mediaExtractor = new MediaExtractor();
             try {
 

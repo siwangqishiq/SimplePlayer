@@ -7,8 +7,9 @@ precision mediump float;
 in vec2 vTextureCoord;
 
 uniform samplerExternalOES sTexture;
-out vec3 frag_color;
+out vec4 frag_color;
 
-void main(){
-    frag_color = texture(sTexture, vTextureCoord).rgb;
+void main() {
+    frag_color = texture(sTexture, vTextureCoord).rgba;
+//    frag_color = vec4(1.0 , 0.0 , 0.0 ,1.0);
 }
