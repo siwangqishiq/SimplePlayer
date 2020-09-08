@@ -10,6 +10,8 @@ uniform samplerExternalOES sTexture;
 out vec4 frag_color;
 
 void main() {
-    frag_color = texture(sTexture, vTextureCoord).rgba;
+
+    vec4 originColor = texture(sTexture, vTextureCoord).rgba;
+    frag_color = originColor;
 //    frag_color = vec4(1.0 , 0.0 , 0.0 ,1.0);
 }

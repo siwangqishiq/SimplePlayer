@@ -1,16 +1,25 @@
 package xyz.panyi.simpleplayer;
 
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.os.Bundle;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.List;
+
+import me.rosuh.filepicker.config.FilePickerManager;
 
 /**
  * https://bigflake.com/mediacodec/#overview
@@ -26,16 +35,24 @@ public class VideoPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video2);
 
+        findViewById(R.id.select_file_btn).setOnClickListener((v)->{
+            selectFile();
+        });
+
         mGLSurfaceView = findViewById(R.id.surfaceView);
-        mSurfaceView = findViewById(R.id.surfaceView2);
+        //mSurfaceView = findViewById(R.id.surfaceView2);
 
         findViewById(R.id.player_btn).setOnClickListener((v) -> {
-            if (isRun)
-                return;
-
-            isRun = true;
-            new DecoderThread().start();
+            isRun = false;
         });
+    }
+
+    private void playVideo(final String file){
+        if (isRun)
+            return;
+
+        isRun = true;
+        new DecoderThread(file).start();
     }
 
     @Override
@@ -44,13 +61,46 @@ public class VideoPlayerActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private void selectFile(){
+        FilePickerManager.INSTANCE.from(this).forResult(FilePickerManager.REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == FilePickerManager.REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> paths = FilePickerManager.INSTANCE.obtainData();
+            if (paths != null && paths.size() > 0) {
+                final String filePath = paths.get(0);
+                System.out.println("filepath = " + filePath);
+
+                Toast.makeText(this , filePath  ,Toast.LENGTH_LONG).show();
+
+                playVideo(filePath);
+            }
+        }
+    }
+
+
+
     class DecoderThread extends Thread {
+        final String filepath;
+
+        public DecoderThread(String path){
+            filepath = path;
+        }
+
         @Override
         public void run() {
             MediaExtractor mediaExtractor = new MediaExtractor();
             try {
-                final AssetFileDescriptor fileDescriptor = getAssets().openFd("datie.mp4");
-                mediaExtractor.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+                //final AssetFileDescriptor fileDescriptor = getAssets().openFd("gakki.mp4");
+                //FileDescriptor fileDesp  = new FileDescriptor();
+
+                File file = new File(filepath);
+                FileInputStream inputStream = new FileInputStream(file);
+                mediaExtractor.setDataSource(inputStream.getFD());
 
                 int numTracks = mediaExtractor.getTrackCount();
                 MediaFormat format = null;
