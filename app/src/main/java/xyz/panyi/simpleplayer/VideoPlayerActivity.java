@@ -8,6 +8,7 @@ import android.media.MediaFormat;
 import android.media.MediaSync;
 import android.os.Bundle;
 import android.view.SurfaceView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,10 +32,14 @@ public class VideoPlayerActivity extends AppCompatActivity {
     private MyGLSurfaceView mGLSurfaceView;
     private SurfaceView mSurfaceView;
 
+    private TextView mContextText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video2);
+
+        mContextText = findViewById(R.id.content_text);
 
         findViewById(R.id.select_file_btn).setOnClickListener((v)->{
             selectFile();
@@ -46,6 +51,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
         findViewById(R.id.player_btn).setOnClickListener((v) -> {
             isRun = false;
         });
+
+        mContextText.setText(NativeBridge.stringFromJNI());
     }
 
     private void playVideo(final String file){
