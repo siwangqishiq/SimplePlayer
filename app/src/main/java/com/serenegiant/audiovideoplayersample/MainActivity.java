@@ -1,11 +1,11 @@
-<!--
+package com.serenegiant.audiovideoplayersample;
 /*
- * AudioVideoRecordingSample
- * Sample project to cature audio and video from internal mic/camera and save as MPEG4 file.
+ * AudioVideoPlayerSample
+ * Sample project to play audio and video from MPEG4 file using MediaCodec.
  *
  * Copyright (c) 2014 saki t_saki@serenegiant.com
  *
- * File name: activity_main.xml
+ * File name: MainActivity.java
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,11 +21,25 @@
  *
  * All files in the folder are under this Apache License, Version 2.0.
 */
--->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.serenegiant.audiovideosample.MainActivity"
-    tools:ignore="MergeRootFrame" />
+
+
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import xyz.panyi.simpleplayer.R;
+
+public class MainActivity extends AppCompatActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		if (savedInstanceState == null) {
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, new PlayerFragment()).commit();
+		}
+	}
+
+}

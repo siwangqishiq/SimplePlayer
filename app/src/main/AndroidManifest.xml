@@ -13,13 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".VideoActivity">
-
         </activity>
 
         <activity android:name=".AudioPlayerActivity">
         </activity>
 
         <activity android:name=".VideoPlayerActivity">
+        </activity>
+
+
+        <activity android:name="com.serenegiant.audiovideoplayersample.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

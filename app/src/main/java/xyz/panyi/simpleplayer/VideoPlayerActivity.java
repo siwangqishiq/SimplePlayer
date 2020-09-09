@@ -5,6 +5,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
+import android.media.MediaSync;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.widget.Toast;
@@ -80,6 +81,13 @@ public class VideoPlayerActivity extends AppCompatActivity {
                 playVideo(filePath);
             }
         }
+    }
+
+    private void syncPlayVideo(){
+        MediaSync sync = new MediaSync();
+        sync.setSurface(null);
+
+        sync.createInputSurface();
     }
 
 
